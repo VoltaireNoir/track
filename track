@@ -71,7 +71,7 @@ def input_handler(key):
             text.set_text(f"Finished: {activities.todays_log(SELECTED)}")
 
     if key == "l" and not ON:
-        text.set_text(f"{SELECTED} Log:\n{activities.getlog(SELECTED)}")
+        text.set_text(f"{SELECTED} Log:\n\n{activities.getlog(SELECTED)}")
 
     if key == "c" and not ON:
         activities.clean_todays_log(SELECTED)
