@@ -32,3 +32,10 @@
 - `c` Clear today's log for selected activity
 - `C` Clear all logs for all activities
 - `1-0, !-)` Switch between activities (max 20)
+
+## Instructions
+- **Dependency**: [Urwid](https://pypi.org/project/urwid/)
+  - `pip install urwid`
+- Make sure "track" is executible
+  - `chmod +x track`
+- Add at least one activity using the command `track add [name]`, the TUI won't launch otherwise
