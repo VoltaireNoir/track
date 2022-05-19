@@ -47,11 +47,8 @@ def args_handler(args):
 
     if args[0].lower() == "clean":
         name = args[1]
-        activities.clean_log(name)
-        save(activities)
-
-    if args[0].lower() == "clear":
-        activities.clean_all_logs()
+        if name == "all": activities.clean_all_logs()
+        else: activities.clean_log(name)
         save(activities)
 
 def input_handler(key):
