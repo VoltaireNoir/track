@@ -1,2 +1,2 @@
 # mtracker
-Minimal Activity Tracker for Terminal Users
+A Minimalistic Activity Tracker for Terminal Users
