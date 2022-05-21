@@ -42,5 +42,6 @@
 
 ## Roadmap
 - [ ] Set everyday goal and display whether or not the goal has been reached
+- [ ] Track activity from the commandline
 - [ ] Export logs to CSV
 - [ ] Generate graph based on logs (stats)
