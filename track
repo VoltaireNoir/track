@@ -111,7 +111,7 @@ except ModuleNotFoundError: TUI = False
 
 # Check for these conditions before launching TUI
 if TUI is False: print("Urwid Python module is missing:\nrun 'pip install urwid'")
-elif SELECTED is None: print("No activities found. Exiting...")
+elif SELECTED is None: print("No activities found.\nAdd at least one activity to start the UI.")
 
 # Build and Run TUI
 else:
