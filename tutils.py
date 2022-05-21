@@ -13,6 +13,7 @@ class activity:
     name = ""
     log = {}
     state = False
+    thread = None
 
     def __init__(self,name:str,log={}):
         self.name = name
@@ -97,14 +98,18 @@ class activities(list):
         act = self.get(name)
         if act:
             self.ACTIVE = act
-            x = threading.Thread(target=act.start)
-            x.daemon = True
-            x.start()
+            act.thread = threading.Thread(target=act.start,daemon=True)
+            act.thread.start()
 
     def deactivate(self):
         if self.ACTIVE:
             self.ACTIVE.stop()
-            self.ACTIVE = None
+
+    def is_thread_active(self):
+        if self.ACTIVE is None:
+            return False
+        isactive = self.ACTIVE.thread.is_alive()
+        return isactive
 
     def select(self,name:str):
         self.insert(0,self.pop(self.index(self.get(name))))

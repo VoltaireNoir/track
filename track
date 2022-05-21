@@ -60,7 +60,7 @@ def input_handler(key):
     if key == "q": raise u.ExitMainLoop()
 
     elif key == "s":
-        if not ON:
+        if not ON and not activities.is_thread_active():
             ON = True
             activities.activate(SELECTED)
             handle = timer(_loop=loop,_data=None)
