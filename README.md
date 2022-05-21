@@ -1,5 +1,6 @@
 # track
-### A Minimalistic Activity Tracker for Terminal Users
+#### "_A Minimalistic Activity Tracker for Those Who Live in the Terminal_"
+
 ![s1](https://github.com/VoltaireNoir/track/blob/main/screenshots/ss1.png)
 ![s2](https://github.com/VoltaireNoir/track/blob/main/screenshots/ss2.png)
 
