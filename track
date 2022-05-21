@@ -5,6 +5,7 @@ from tutils import *
 activities = load()
 SELECTED = None if len(activities) == 0 else activities[0].name
 ON = False
+HANDLE = None
 
 def args_handler(args):
 
@@ -53,7 +54,7 @@ def args_handler(args):
             save(activities)
 
 def input_handler(key):
-    global SELECTED, ON
+    global SELECTED, ON, HANDLE
     KEYS = {"1":0,"2":1,"3":2,"4":3,"5":4,"6":5,"7":6,"8":7,"9":8,"0":9,"!":10,"@":11,"#":12,"$":13,"%":14,"^":15,"&":16,"*":17,"(":18,")":19}
 
     if key == "q": raise u.ExitMainLoop()
@@ -62,9 +63,10 @@ def input_handler(key):
         if not ON:
             ON = True
             activities.activate(SELECTED)
-            timer(_loop=loop,_data="")
-        elif ON:
+            handle = timer(_loop=loop,_data=None)
+        else:
             ON = False
+            loop.remove_alarm(HANDLE)
             activities.deactivate()
             save(activities)
             text.set_text(f"Finished: {activities.todays_log(SELECTED)}")
@@ -98,7 +100,8 @@ def timer(_loop,_data):
         text.set_text(
             f"{SELECTED} is now active!\n\n {activities.todays_log(SELECTED)}"
         )
-        loop.set_alarm_in(1,timer)
+        HANDLE = loop.set_alarm_in(1,timer)
+        return HANDLE
 
 # If arguments exist, process them, then exit
 if len(sys.argv) > 1:args_handler(sys.argv[1:]); exit()
