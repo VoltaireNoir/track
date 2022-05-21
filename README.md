@@ -40,7 +40,10 @@
 - `C` Clear all logs for all activities
 - `1-0, !-)` Switch between activities (max 20)
 
-## Roadmap
+## Roadmap / Features to be added
+- [ ] Manual log entries
+- [ ] Delete specific log entry (by date)
+- [ ] Modify order of activites
 - [ ] Set everyday goal and display whether or not the goal has been reached
 - [ ] Track activity from the commandline
 - [ ] Export logs to CSV
