@@ -3,6 +3,13 @@
 ![s1](https://github.com/VoltaireNoir/track/blob/main/screenshots/ss1.png)
 ![s2](https://github.com/VoltaireNoir/track/blob/main/screenshots/ss2.png)
 
+## Instructions
+- **Dependency**: [Urwid](https://pypi.org/project/urwid/)
+  - `pip install urwid`
+- Make sure "track" is executible
+  - `chmod +x track`
+- Add at least one activity using the command `track add [name]`, the TUI won't launch otherwise
+
 ## Commands and Shortcuts
 > Example: track log activityName
 - `track add activity / track a activity`
@@ -23,7 +30,6 @@
   - Clear log for given activity or all of them
 - `track flush`
   - Delete all activities
----
 #### Keyboard Shortcuts
 - `q` Quit
 - `s` Start/Stop
@@ -33,9 +39,7 @@
 - `C` Clear all logs for all activities
 - `1-0, !-)` Switch between activities (max 20)
 
-## Instructions
-- **Dependency**: [Urwid](https://pypi.org/project/urwid/)
-  - `pip install urwid`
-- Make sure "track" is executible
-  - `chmod +x track`
-- Add at least one activity using the command `track add [name]`, the TUI won't launch otherwise
+## Roadmap
+- [ ] Set everyday goal and display whether or not the goal has been reached
+- [ ] Export logs to CSV
+- [ ] Generate graph based on logs (stats)
