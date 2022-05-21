@@ -45,8 +45,11 @@ def args_handler(args):
             print(activities.getlogs())
 
         elif args[0].lower() == "list":
-            for name in activities.get_all_names():
-                print(name)
+            if len(activities.get_all_names()) == 0:
+                print("Empty")
+            else:
+                for name in activities.get_all_names():
+                    print(name)
 
         elif args[0].lower() == "flush":
             activities.flush()
@@ -98,6 +101,7 @@ def timer(_loop,_data):
             f"{SELECTED} is now active!\n\n {activities.todays_log(SELECTED)}"
         )
         loop.set_alarm_in(1,timer)
+
 
 text = u.Text(f"Selected: {SELECTED}","center")
 fill = u.Filler(text)
