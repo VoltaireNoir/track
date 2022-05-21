@@ -11,52 +11,53 @@ ON = False
 
 def args_handler(args):
 
-    if args[0].lower() in ("add","a"):
-        name = args[1]
-        activities.add(name)
-        save(activities)
+    if len(args) == 2:
+        if args[0].lower() in ("add","a"):
+            name = args[1]
+            activities.add(name)
+            save(activities)
 
-    if args[0].lower() in ("del","d"):
-        name = args[1]
-        activities.delete(name)
-        save(activities)
+        elif args[0].lower() in ("del","d"):
+            name = args[1]
+            activities.delete(name)
+            save(activities)
 
-    if args[0].lower() == "log":
-        name = args[1]
-        print(activities.getlog(name))
+        elif args[0].lower() == "log":
+            name = args[1]
+            print(activities.getlog(name))
 
-    if args[0].lower() == "logs":
-        print(activities.getlogs())
+        elif args[0].lower() == "today":
+            name = args[1]
+            print(activities.todays_log(name))
 
-    if args[0].lower() == "today":
-        name = args[1]
-        print(activities.todays_log(name))
+        elif args[0].lower() in ("select","sel"):
+            name = args[1]
+            activities.select(name)
+            save(activities)
 
-    if args[0].lower() == "list":
-        for name in activities.get_all_names():
-            print(name)
+        elif args[0].lower() == "clean":
+            name = args[1]
+            if name == "all": activities.clean_all_logs()
+            else: activities.clean_log(name)
+            save(activities)
+    else:
+        if args[0].lower() == "logs":
+            print(activities.getlogs())
 
-    if args[0].lower() == "flush":
-        activities.flush()
-        save(activities)
+        elif args[0].lower() == "list":
+            for name in activities.get_all_names():
+                print(name)
 
-    if args[0].lower() in ("select","sel"):
-        name = args[1]
-        activities.select(name)
-        save(activities)
-
-    if args[0].lower() == "clean":
-        name = args[1]
-        if name == "all": activities.clean_all_logs()
-        else: activities.clean_log(name)
-        save(activities)
+        elif args[0].lower() == "flush":
+            activities.flush()
+            save(activities)
 
 def input_handler(key):
     global SELECTED, ON
 
     if key == "q": raise u.ExitMainLoop()
 
-    if key == "s":
+    elif key == "s":
         if not ON:
             ON = True
             activities.activate(SELECTED)
@@ -67,25 +68,25 @@ def input_handler(key):
             save(activities)
             text.set_text(f"Finished: {activities.todays_log(SELECTED)}")
 
-    if key == "l" and not ON:
+    elif key == "l" and not ON:
         text.set_text(f"{SELECTED} Log:\n\n{activities.getlog(SELECTED)}")
 
-    if key == "c" and not ON:
+    elif key == "c" and not ON:
         activities.clean_todays_log(SELECTED)
         save(activities)
         text.set_text(f"Today's {SELECTED} Log Cleared")
 
-    if key == "C" and not ON:
+    elif key == "C" and not ON:
         activities.clean_log(SELECTED)
         save(activities)
         text.set_text(f"{SELECTED}'s All Logs Cleared")
 
-    if key == "D" and not ON:
+    elif key == "D" and not ON:
         activities.delete(SELECTED)
         save(activities)
         text.set_text(f"{SELECTED} Deleted from Activities")
 
-    if key in KEYS and not ON:
+    elif key in KEYS and not ON:
         key = KEYS[key]
         if key < len(activities):
             SELECTED = activities[key].name
