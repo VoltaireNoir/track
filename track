@@ -34,10 +34,12 @@ def args_handler(args):
             save(activities)
 
         elif args[0].lower() == "clean":
-            name = args[1]
-            date = args[2] if len(args) == 3 else None
+            name, date, today = args[1], None, False
+            if len(args) == 3:
+                if args[2].lower() == "today": today = True
+                else: date = args[1]
             if name == "all": activities.clean_all_logs()
-            else: activities.clean_log(name,date)
+            else: activities.clean_log(name,date,today)
             save(activities)
     else:
         if args[0].lower() == "logs":
