@@ -83,7 +83,7 @@ class activities(list):
 
             if log == {}: return "Empty"
             loglist = [f"{key}: {timeconv(value)}" for key,value in log.items()]
-
+            loglist.reverse()
             string = "\n".join(loglist[:3]) if recent and len(loglist) > 3 else "\n".join(loglist)
             return string
 
