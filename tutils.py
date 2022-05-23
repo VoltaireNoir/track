@@ -118,6 +118,12 @@ class activities(list):
     def select(self,name:str):
         if self.exists(name): self.insert(0,self.pop(self.index(self.get(name)))); return True
 
+    def map(self,name,index):
+        if index >= len(self): return False
+        if self.exists(name):
+            self.insert(index,self.pop(self.index(self.get(name))))
+            return True
+
 def timeconv(seconds:int):
         seconds = str(timedelta(seconds=seconds))
         return seconds
