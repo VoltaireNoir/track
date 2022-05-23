@@ -3,9 +3,7 @@ import time
 from datetime import datetime, timedelta
 import threading, pathlib, pickle
 
-TODAY = datetime.now()
 DATE_FORMAT = "%d-%m-%Y"
-TODAY_STRING = TODAY.strftime(DATE_FORMAT)
 P = pathlib.Path(__file__).with_name(".tdata")
 
 class activity:
@@ -21,7 +19,7 @@ class activity:
 
     def start(self):
         self.state = True
-        key = TODAY_STRING
+        key = todays_date()
         if key not in self.log:
            self.log[key] = 0
 
@@ -48,7 +46,8 @@ class activities(list):
     def clean_log(self,name:str,date=None,today=False):
         act = self.get(name)
         if today and act:
-            if TODAY_STRING in act.log: del act.log[TODAY_STRING]
+            key = todays_date()
+            if key in act.log: del act.log[key]
         elif date and act:
             if date in act.log: del act.log[date]
         elif act:
@@ -94,7 +93,8 @@ class activities(list):
         return string
 
     def todays_log(self,name:str):
-        time = str(timedelta(seconds=self.get(name).log[TODAY_STRING]))
+        key = todays_date()
+        time = str(timedelta(seconds=self.get(name).log[key]))
         return time
 
     def activate(self, name:str):
@@ -120,6 +120,13 @@ class activities(list):
 def timeconv(seconds:int):
         seconds = str(timedelta(seconds=seconds))
         return seconds
+
+def todays_date(string=True):
+    todayob = datetime.now()
+    formatted = todayob.strftime(DATE_FORMAT)
+    if string:
+        return formatted
+    return todayob
 
 def save(activities):
     data = {}
