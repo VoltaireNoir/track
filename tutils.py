@@ -46,10 +46,11 @@ class activities(list):
         for _ in range(len(self)): self.pop(0)
 
     def clean_log(self,name:str,date=None):
-        if date:
-            del self.get(name).log[date]
-        else:
-            self.get(name).log = {}
+        act = self.get(name)
+        if date and act:
+            if date in act.log: del act.log[date]
+        elif act:
+            act.log = {}
 
     def clean_todays_log(self,name:str):
         if TODAY_STRING in self.get(name).log: del self.get(name).log[TODAY_STRING]
