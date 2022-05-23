@@ -39,11 +39,7 @@ def args_handler(args):
 
         elif args[0].lower() == "map":
             name = args[1]
-            if args[1].lower() == "-show":
-                k = list(KEYS.keys())
-                for keymap in [f"{k[i]}: {name}" for i, name in enumerate(activities.get_all_names()) if i < 20]:
-                    print(keymap)
-            elif args[2] in KEYS:
+            if args[2] in KEYS:
                 index = KEYS[args[2]]
                 if activities.map(name,index):
                     save(activities)
@@ -67,6 +63,11 @@ def args_handler(args):
             else:
                 for name in activities.get_all_names():
                     print(name)
+
+        elif args[0].lower() == "keymap":
+            k = list(KEYS.keys())
+            for keymap in [f"{k[i]}: {name}" for i, name in enumerate(activities.get_all_names()) if i < 20]:
+                print(keymap)
 
         elif args[0].lower() == "flush":
             activities.flush()
