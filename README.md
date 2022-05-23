@@ -32,13 +32,13 @@ Configure the program using simple self-explainatory commands, and use the fast 
   - Show all logs for all activities
 - `track today activity`
   - Show only today's log for given activity
-- `track clean activity / track clean -all / track clean activity [date/today]`
+- `track clean activity / track clean all / track clean activity [date/today]`
   - Clear log of given activity or all activities
   - Only specific log will be cleared if 'today' or a date is specified after activity name
     - Date format dd-mm-yyyy
 - `track map activity key`
   - Maps activity to the specified keyboard key (options: "1-0" and "!-)")
-- `track map -show`
+- `track keymap`
   - Shows current keymap
 - `track flush`
   - Delete all activities including their logs (cannot be recovered)
