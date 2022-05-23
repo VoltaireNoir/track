@@ -22,7 +22,7 @@ def args_handler(args):
 
         elif args[0].lower() == "log":
             name = args[1]
-            print(activities.getlog(name))
+            print(activities.get_log(name))
 
         elif args[0].lower() == "today":
             name = args[1]
@@ -43,7 +43,7 @@ def args_handler(args):
             save(activities)
     else:
         if args[0].lower() == "logs":
-            print(activities.getlogs())
+            print(activities.get_logs())
 
         elif args[0].lower() == "list":
             if len(activities.get_all_names()) == 0:
@@ -75,7 +75,7 @@ def input_handler(key):
             text.set_text(f"Finished: {activities.todays_log(SELECTED)}")
 
     elif key == "l" and not ON:
-        text.set_text(f"{SELECTED} Log:\n\n{activities.getlog(SELECTED)}")
+        text.set_text(f"{SELECTED} Log:\n\n{activities.get_log(SELECTED)}")
 
     elif key == "c" and not ON:
         activities.clean_log(SELECTED,today=True)

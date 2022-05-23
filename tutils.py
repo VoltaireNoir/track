@@ -75,7 +75,7 @@ class activities(list):
             if act.name.lower() == name.lower():
                 return act
 
-    def getlog(self,name:str,raw=False):
+    def get_log(self,name:str,raw=False):
         log = self.get(name).log
 
         if raw:
@@ -86,11 +86,11 @@ class activities(list):
         string = "\n".join([f"{key}: {timeconv(value)}" for key,value in log.items()])
         return string
 
-    def getlogs(self,raw=False):
+    def get_logs(self,raw=False):
         string = ""
         for act in self:
             string += act.name.capitalize() + "\n"
-            string += self.getlog(act.name) + "\n\n"
+            string += self.get_log(act.name) + "\n\n"
         return string
 
     def todays_log(self,name:str):
