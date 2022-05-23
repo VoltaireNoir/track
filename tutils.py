@@ -74,7 +74,7 @@ class activities(list):
             if act.name.lower() == name.lower():
                 return act
 
-    def get_log(self,name:str,raw=False):
+    def get_log(self,name:str,raw=False,recent=False):
         if self.exists(name):
             log = self.get(name).log
 
@@ -82,8 +82,9 @@ class activities(list):
                 return log
 
             if log == {}: return "Empty"
+            loglist = [f"{key}: {timeconv(value)}" for key,value in log.items()]
 
-            string = "\n".join([f"{key}: {timeconv(value)}" for key,value in log.items()])
+            string = "\n".join(loglist[:3]) if recent and len(loglist) > 3 else "\n".join(loglist)
             return string
 
     def get_logs(self,raw=False):
