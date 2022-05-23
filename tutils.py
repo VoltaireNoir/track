@@ -75,15 +75,16 @@ class activities(list):
                 return act
 
     def get_log(self,name:str,raw=False):
-        log = self.get(name).log
+        if self.exists(name):
+            log = self.get(name).log
 
-        if raw:
-            return log
+            if raw:
+                return log
 
-        if log == {}: return "Empty"
+            if log == {}: return "Empty"
 
-        string = "\n".join([f"{key}: {timeconv(value)}" for key,value in log.items()])
-        return string
+            string = "\n".join([f"{key}: {timeconv(value)}" for key,value in log.items()])
+            return string
 
     def get_logs(self,raw=False):
         string = ""
@@ -93,16 +94,16 @@ class activities(list):
         return string
 
     def todays_log(self,name:str):
-        key = todays_date()
-        time = str(timedelta(seconds=self.get(name).log[key]))
-        return time
+        key = todays_date(); act = self.get(name)
+        if act:
+            log = str(timedelta(seconds=act.log[key])) if key in act.log else "Empty"
+            return log
 
     def activate(self, name:str):
-        act = self.get(name)
-        if act:
-            self.ACTIVE = act
-            act.thread = threading.Thread(target=act.start,daemon=True)
-            act.thread.start()
+        if self.exists(name):
+            self.ACTIVE = self.get(name)
+            self.ACTIVE.thread = threading.Thread(target=self.ACTIVE.start,daemon=True)
+            self.ACTIVE.thread.start()
 
     def deactivate(self):
         if self.ACTIVE:
@@ -115,7 +116,7 @@ class activities(list):
         return isactive
 
     def select(self,name:str):
-        self.insert(0,self.pop(self.index(self.get(name))))
+        if self.exists(name): self.insert(0,self.pop(self.index(self.get(name))))
 
 def timeconv(seconds:int):
         seconds = str(timedelta(seconds=seconds))
