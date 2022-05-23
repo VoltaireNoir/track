@@ -54,7 +54,8 @@ Configure the program using simple self-explainatory commands, and use the fast 
 ## Roadmap / Features to be added
 - [ ] Manual log entries
 - [x] Delete specific log entry (by date)
-- [ ] Modify order of activites
+- [x] Modify order of activites
+  - Introduced Custom Key-mapping
 - [ ] Set everyday goal and display whether or not the goal has been reached
 - [ ] Track activity from the commandline
 - [ ] Export logs to CSV
