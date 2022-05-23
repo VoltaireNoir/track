@@ -12,13 +12,15 @@ def args_handler(args):
     if len(args) >= 2:
         if args[0].lower() in ("add","a"):
             name = args[1]
-            activities.add(name)
-            save(activities)
+            if activities.add(name):
+                save(activities)
+                print("Done!")
 
         elif args[0].lower() in ("del","d"):
             name = args[1]
-            activities.delete(name)
-            save(activities)
+            if activities.delete(name):
+                save(activities)
+                print("Done!")
 
         elif args[0].lower() == "log":
             name = args[1]
@@ -30,8 +32,9 @@ def args_handler(args):
 
         elif args[0].lower() in ("select","sel"):
             name = args[1]
-            activities.select(name)
-            save(activities)
+            if activities.select(name):
+                save(activities)
+                print("Done!")
 
         elif args[0].lower() == "clean":
             name, date, today = args[1], None, False
@@ -120,6 +123,5 @@ elif SELECTED is None: print("No activities found.\nAdd at least one activity to
 else:
     text = u.Text(f"Selected: {SELECTED}","center")
     fill = u.Filler(text)
-
     try: loop = u.MainLoop(fill,unhandled_input=input_handler); loop.run()
     except KeyboardInterrupt: print("Exiting...")

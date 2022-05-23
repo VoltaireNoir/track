@@ -35,10 +35,10 @@ class activities(list):
     ACTIVE = None
 
     def add(self, name:str, log={}):
-        if not self.exists(name): self.append(activity(name,log))
+        if not self.exists(name): self.append(activity(name,log)); return True
 
     def delete(self, name:str):
-        if self.exists(name): self.remove(self.get(name))
+        if self.exists(name): self.remove(self.get(name)); return True
 
     def flush(self):
         for _ in range(len(self)): self.pop(0)
@@ -47,11 +47,11 @@ class activities(list):
         act = self.get(name)
         if today and act:
             key = todays_date()
-            if key in act.log: del act.log[key]
+            if key in act.log: del act.log[key]; return True
         elif date and act:
-            if date in act.log: del act.log[date]
+            if date in act.log: del act.log[date]; return True
         elif act:
-            act.log = {}
+            act.log = {}; return True
 
     def clean_all_logs(self):
         for act in self:
@@ -116,7 +116,7 @@ class activities(list):
         return isactive
 
     def select(self,name:str):
-        if self.exists(name): self.insert(0,self.pop(self.index(self.get(name))))
+        if self.exists(name): self.insert(0,self.pop(self.index(self.get(name)))); return True
 
 def timeconv(seconds:int):
         seconds = str(timedelta(seconds=seconds))
