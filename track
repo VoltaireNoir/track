@@ -9,7 +9,7 @@ HANDLE = None
 
 def args_handler(args):
 
-    if len(args) == 2:
+    if len(args) >= 2:
         if args[0].lower() in ("add","a"):
             name = args[1]
             activities.add(name)
@@ -35,8 +35,9 @@ def args_handler(args):
 
         elif args[0].lower() == "clean":
             name = args[1]
+            date = args[2] if len(args) == 3 else None
             if name == "all": activities.clean_all_logs()
-            else: activities.clean_log(name)
+            else: activities.clean_log(name,date)
             save(activities)
     else:
         if args[0].lower() == "logs":

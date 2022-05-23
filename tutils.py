@@ -45,8 +45,11 @@ class activities(list):
     def flush(self):
         for _ in range(len(self)): self.pop(0)
 
-    def clean_log(self,name:str):
-        self.get(name).log = {}
+    def clean_log(self,name:str,date=None):
+        if date:
+            del self.get(name).log[date]
+        else:
+            self.get(name).log = {}
 
     def clean_todays_log(self,name:str):
         if TODAY_STRING in self.get(name).log: del self.get(name).log[TODAY_STRING]
