@@ -76,7 +76,7 @@ def input_handler(key):
         text.set_text(f"{SELECTED} Log:\n\n{activities.getlog(SELECTED)}")
 
     elif key == "c" and not ON:
-        activities.clean_todays_log(SELECTED)
+        activities.clean_log(SELECTED,today=True)
         save(activities)
         text.set_text(f"Today's {SELECTED} Log Cleared")
 
