@@ -4,12 +4,17 @@
 ![s1](https://github.com/VoltaireNoir/track/blob/main/screenshots/ss1.png)
 ![s2](https://github.com/VoltaireNoir/track/blob/main/screenshots/ss2.png)
 
+_track_ is designed in such a way as to let you spend more time being productive instead of making you spend time fiddling with the program that helps you track your actvities.
+Configure the program using simple self-explainatory commands, and use the fast and ultra-minimal TUI to start tracking your activities using keyboard shortcuts.
+
 ## Instructions
-- **Dependency**: [Urwid](https://pypi.org/project/urwid/)
-  - `pip install urwid`
+- Clone repository (for now)
+  - `git clone https://github.com/VoltaireNoir/track.git`
 - Make sure "track" is executible
   - `chmod +x track`
-- Add at least one activity using the command `track add [name]`, the TUI won't launch otherwise
+- Add at least one activity using the command `track add [name]`, the UI won't launch otherwise
+- **Dependency**: [Urwid](https://pypi.org/project/urwid/)
+  - `pip install urwid`
 
 ## Commands and Shortcuts
 > Example: track log activityName
