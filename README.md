@@ -26,13 +26,12 @@ Configure the program using simple self-explainatory commands, and use the fast 
   - List all existing activites in the tracker
 - `track sel activity / track select activity`
   - Select default activity (puts given activity in the first position when running the program)
-- `track log activity / track log activity today`
+- `track log activity`
   - Show logs for the given activity
-  - Only today's log will be shown if 'today' is specified after activity name
 - `track logs`
   - Show all logs for all activities
 - `track today activity`
-  - Show today's log for given activity
+  - Show only today's log for given activity
 - `track clean activity / track clean all / track clean activity [date/today]`
   - Clear log of given activity or all activities
   - Only specific log will be cleared if 'today' or a date is specified after activity name
