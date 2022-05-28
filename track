@@ -73,6 +73,10 @@ def args_handler(args):
             activities.flush()
             save(activities)
 
+        elif args[0].lower() == "export":
+            if export_csv(activities):
+                print("Done!")
+
 def input_handler(key):
     global SELECTED, ON, HANDLE
 

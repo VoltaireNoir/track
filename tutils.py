@@ -159,5 +159,15 @@ def load():
 
     return data
 
+def export_csv(activities,filename="activity_log.csv"):
+    try:
+        with open(filename,"w") as f:
+            for act in activities:
+                log = ";".join([f"{date}:{time}" for date, time in act.log.items()])
+                f.write(f"{act.name};{log}\n")
+    except:
+        return False
+    return True
+
 if __name__ == "__main__":
-    breakpoint()
+    pass
