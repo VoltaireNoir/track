@@ -40,6 +40,8 @@ Configure the program using simple self-explainatory commands, and use the fast 
   - Maps activity to the specified keyboard key (options: "1-0" and "!-)")
 - `track keymap`
   - Shows current keymap
+- `track export`
+  - Export logs to a csv file in working directory
 - `track flush`
   - Delete all activities including their logs (cannot be recovered)
 #### Keyboard Shortcuts
@@ -53,10 +55,10 @@ Configure the program using simple self-explainatory commands, and use the fast 
 
 ## Roadmap / Features to be added
 - [ ] Manual log entries
-- [x] Delete specific log entry (by date)
-- [x] Modify order of activites
+- [x] ~~Delete specific log entry (by date)~~
+- [x] ~~Modify order of activites~~
   - Introduced Custom Key-mapping
 - [ ] Set everyday goal and display whether or not the goal has been reached
 - [ ] Track activity from the commandline
-- [ ] Export logs to CSV
+- [x] ~~Export logs to CSV~~
 - [ ] Generate graph based on logs (stats)
