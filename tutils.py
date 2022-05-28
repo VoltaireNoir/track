@@ -46,6 +46,7 @@ class activities(list):
 
     def flush(self):
         for _ in range(len(self)): self.pop(0)
+        self.ACTIVE = activity("")
 
     def clean_log(self,name:str,date=None,today=False):
         act = self.get(name)
