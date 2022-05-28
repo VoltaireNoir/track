@@ -134,8 +134,8 @@ class activities(list):
             return True
 
 def timeconv(seconds:int):
-        seconds = str(timedelta(seconds=seconds))
-        return seconds
+        formatted = str(timedelta(seconds=seconds))
+        return formatted
 
 def todays_date():
     todayob = datetime.now()
@@ -179,4 +179,4 @@ def export_csv(activities,filename="activity_log.csv"):
     return True
 
 if __name__ == "__main__":
-    x = load()
+    pass
