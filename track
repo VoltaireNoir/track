@@ -79,7 +79,7 @@ def args_handler(args):
                 print(f"{name} finished at {activities.todays_log(name)}")
 
         elif args[0].lower() == "status":
-            name = activities.ACTIVE.name
+            name = "None" if activities.ACTIVE.name == "" else activities.ACTIVE.name
             state = "Active" if activities.ACTIVE.state else "Inactive"
             clog = activities.active_log()
             print(f"Sel: {name.capitalize()}\nState: {state}\nLog: {clog}")
