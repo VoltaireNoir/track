@@ -111,10 +111,10 @@ class activities(list):
             return log
 
     def activate(self, name=None):
-        if name is None and not self.ACTIVE.state and len(self) != 0:
+        if name is None and not self.ACTIVE.state and self.ACTIVE.name != "":
             self.ACTIVE.start()
             return True
-        elif self.exists(name) and not self.ACTIVE.state:
+        elif name is not None and self.exists(name) and not self.ACTIVE.state:
             self.ACTIVE = self.get(name)
             self.ACTIVE.start()
             return True
