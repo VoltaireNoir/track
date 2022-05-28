@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import time
 from datetime import datetime, timedelta
-import threading, pathlib, pickle
+import pathlib, pickle
 
 DATE_FORMAT = "%d-%m-%Y"
 P = pathlib.Path(__file__).with_name(".tdata")
@@ -117,12 +117,6 @@ class activities(list):
         if self.ACTIVE:
             self.ACTIVE.stop()
             self.ACTIVE = None
-
-    def is_thread_active(self):
-        if self.ACTIVE is None:
-            return False
-        isactive = self.ACTIVE.thread.is_alive()
-        return isactive
 
     def select(self,name:str):
         if self.exists(name): self.insert(0,self.pop(self.index(self.get(name)))); return True
