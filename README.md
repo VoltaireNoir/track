@@ -25,7 +25,13 @@ Configure the program using simple self-explainatory commands, and use the fast 
 - `track list`
   - List all existing activites in the tracker
 - `track sel activity / track select activity`
-  - Select default activity (puts given activity in the first position when running the program)
+  - Select activity to track using the commandline interface
+- `track start` 
+  - Start tracking selected activity
+- `track status` 
+  - Show status information of selected activity (active/inactive/log)
+- `track stop` 
+  - Stop tracking selected activity
 - `track log activity`
   - Show logs for the given activity
 - `track logs`
@@ -51,6 +57,7 @@ Configure the program using simple self-explainatory commands, and use the fast 
 - `D` Delete selected activity
 - `c` Clear today's log for selected activity
 - `C` Clear all logs for all activities
+- `r` Refresh/restart timer if stuck
 - `1-0, !-)` Switch between activities (max 20)
 
 ## Roadmap / Features to be added
@@ -59,6 +66,6 @@ Configure the program using simple self-explainatory commands, and use the fast 
 - [x] ~~Modify order of activites~~
   - Introduced Custom Key-mapping
 - [ ] Set everyday goal and display whether or not the goal has been reached
-- [ ] Track activity from the commandline
+- [x] ~~Track activity from the commandline~~
 - [x] ~~Export logs to CSV~~
 - [ ] Generate graph based on logs (stats)
