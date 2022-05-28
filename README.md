@@ -56,7 +56,7 @@ Configure the program using simple self-explainatory commands, and use the fast 
 - `l` Show log for selected activity
 - `D` Delete selected activity
 - `c` Clear today's log for selected activity
-- `C` Clear all logs for all activities
+- `C` Clear all logs for selected activity
 - `r` Refresh/restart timer if stuck
 - `1-0, !-)` Switch between activities (max 20)
 
