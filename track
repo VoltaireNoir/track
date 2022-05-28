@@ -3,8 +3,11 @@ import sys
 from tutils import *
 
 activities = load()
-SELECTED = None if len(activities) == 0 else activities[0].name
-ON = False
+ON = True if activities.ACTIVE.state else False
+if ON:
+    SELECTED = activities.ACTIVE.name
+else:
+    SELECTED = None if len(activities) == 0 else activities[0].name
 HANDLE = None
 KEYS = {"1":0,"2":1,"3":2,"4":3,"5":4,"6":5,"7":6,"8":7,"9":8,"0":9,"!":10,"@":11,"#":12,"$":13,"%":14,"^":15,"&":16,"*":17,"(":18,")":19}
 
@@ -63,6 +66,23 @@ def args_handler(args):
             else:
                 for name in activities.get_all_names():
                     print(name)
+
+        elif args[0].lower() == "start":
+            if activities.activate():
+                save(activities)
+                print(f"{activities.ACTIVE.name} is now active!")
+
+        elif args[0].lower() == "stop":
+            if activities.deactivate():
+                save(activities)
+                name = activities.ACTIVE.name
+                print(f"{name} finished at {activities.todays_log(name)}")
+
+        elif args[0].lower() == "status":
+            name = activities.ACTIVE.name
+            state = "Active" if activities.ACTIVE.state else "Inactive"
+            clog = activities.active_log()
+            print(f"Sel: {name.capitalize()}\nState: {state}\nLog: {clog}")
 
         elif args[0].lower() == "keymap":
             k = list(KEYS.keys())
@@ -138,7 +158,10 @@ elif SELECTED is None: print("No activities found.\nAdd at least one activity to
 
 # Build and Run TUI
 else:
-    text = u.Text(f"Selected: {SELECTED}","center")
+    if ON:
+        text = u.Text(f"{SELECTED} is now active!\n\n {activities.active_log()}","center")
+    else:
+        text = u.Text(f"Selected: {SELECTED}","center")
     fill = u.Filler(text)
     try: loop = u.MainLoop(fill,unhandled_input=input_handler); loop.run()
     except KeyboardInterrupt: print("Exiting...")

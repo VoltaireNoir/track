@@ -35,7 +35,8 @@ class activity:
 
 
 class activities(list):
-    ACTIVE = None
+
+    ACTIVE = activity("")
 
     def add(self, name:str, log={}):
         if not self.exists(name): self.append(activity(name,log)); return True
@@ -104,22 +105,26 @@ class activities(list):
             return log
 
     def active_log(self):
-        if self.ACTIVE:
+        if self.ACTIVE.state:
             log = self.ACTIVE.alog()
             return log
 
-    def activate(self, name:str):
-        if self.exists(name) and not self.ACTIVE:
+    def activate(self, name=None):
+        if name is None and not self.ACTIVE.state and len(self) != 0:
+            self.ACTIVE.start()
+            return True
+        elif self.exists(name) and not self.ACTIVE.state:
             self.ACTIVE = self.get(name)
             self.ACTIVE.start()
+            return True
 
     def deactivate(self):
-        if self.ACTIVE:
+        if self.ACTIVE.state:
             self.ACTIVE.stop()
-            self.ACTIVE = None
+            return True
 
     def select(self,name:str):
-        if self.exists(name): self.insert(0,self.pop(self.index(self.get(name)))); return True
+        if self.exists(name): self.ACTIVE = self.get(name); return True
 
     def map(self,name,index):
         if index >= len(self): return False
@@ -142,7 +147,7 @@ def save(activities):
         for act in activities:
             data[act.name] = act.log
 
-        pickle.dump(data,f)
+        pickle.dump((data,activities.ACTIVE),f)
 
 def load():
     data = activities()
@@ -151,11 +156,14 @@ def load():
             x = pickle.load(f)
     except (FileExistsError, FileNotFoundError, pickle.UnpicklingError): return data
 
-    if x is None or x == {}:
+    if x is None:
         return data
 
-    for name, log in x.items():
-        data.add(name,log)
+    if len(x) == 2:
+        rawdata, active = x
+        data.ACTIVE = active
+        for name, log in rawdata.items():
+            data.add(name,log)
 
     return data
 
@@ -171,8 +179,3 @@ def export_csv(activities,filename="activity_log.csv"):
 
 if __name__ == "__main__":
     x = load()
-    print("before", x.get_log('test'))
-    x.activate('test')
-    time.sleep(5)
-    x.deactivate()
-    print("after", x.get_log('test'))
