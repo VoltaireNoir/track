@@ -115,6 +115,7 @@ def input_handler(key):
             text.set_text(f"Finished: {activities.todays_log(SELECTED)}")
 
     elif key == "r" and ON:
+        loop.remove_alarm(HANDLE)
         HANDLE = timer(_loop=loop,_data=None)
 
     elif key == "l" and not ON:
