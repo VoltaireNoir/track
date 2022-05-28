@@ -31,7 +31,9 @@ class activity:
 
     def alog(self):
         if self.state is True:
-            return timeconv((datetime.now() - self.start_time).seconds)
+            key = todays_date()
+            offset = self.log[key] if key in self.log else 0
+            return timeconv(offset + (datetime.now() - self.start_time).seconds)
 
 
 class activities(list):
