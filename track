@@ -83,10 +83,10 @@ def input_handler(key):
     if key == "q": raise u.ExitMainLoop()
 
     elif key == "s":
-        if not ON and not activities.is_thread_active():
+        if not ON:
             ON = True
             activities.activate(SELECTED)
-            handle = timer(_loop=loop,_data=None)
+            HANDLE = timer(_loop=loop,_data=None)
         else:
             ON = False
             loop.remove_alarm(HANDLE)
@@ -121,7 +121,7 @@ def input_handler(key):
 def timer(_loop,_data):
     if ON:
         text.set_text(
-            f"{SELECTED} is now active!\n\n {activities.todays_log(SELECTED)}"
+            f"{SELECTED} is now active!\n\n {activities.active_log()}"
         )
         HANDLE = loop.set_alarm_in(1,timer)
         return HANDLE

@@ -8,27 +8,30 @@ P = pathlib.Path(__file__).with_name(".tdata")
 
 class activity:
 
-    name = ""
-    log = {}
     state = False
-    thread = None
+    start_time = None
 
     def __init__(self,name:str,log={}):
         self.name = name
         self.log = log
 
     def start(self):
-        self.state = True
-        key = todays_date()
-        if key not in self.log:
-           self.log[key] = 0
-
-        while self.state:
-            self.log[key] += 1
-            time.sleep(1)
+        if self.state is False:
+            self.state = True
+            self.start_time = datetime.now()
 
     def stop(self):
-        self.state = False
+        if self.state:
+            self.state = False
+            key = todays_date()
+            delta = datetime.now() - self.start_time
+
+            if key in self.log: self.log[key] += delta.seconds
+            else: self.log[key] = delta.seconds
+
+    def alog(self):
+        if self.state is True:
+            return timeconv((datetime.now() - self.start_time).seconds)
 
 
 class activities(list):
@@ -100,15 +103,20 @@ class activities(list):
             log = str(timedelta(seconds=act.log[key])) if key in act.log else "Empty"
             return log
 
+    def active_log(self):
+        if self.ACTIVE:
+            log = self.ACTIVE.alog()
+            return log
+
     def activate(self, name:str):
-        if self.exists(name):
+        if self.exists(name) and not self.ACTIVE:
             self.ACTIVE = self.get(name)
-            self.ACTIVE.thread = threading.Thread(target=self.ACTIVE.start,daemon=True)
-            self.ACTIVE.thread.start()
+            self.ACTIVE.start()
 
     def deactivate(self):
         if self.ACTIVE:
             self.ACTIVE.stop()
+            self.ACTIVE = None
 
     def is_thread_active(self):
         if self.ACTIVE is None:
@@ -129,12 +137,10 @@ def timeconv(seconds:int):
         seconds = str(timedelta(seconds=seconds))
         return seconds
 
-def todays_date(string=True):
+def todays_date():
     todayob = datetime.now()
     formatted = todayob.strftime(DATE_FORMAT)
-    if string:
-        return formatted
-    return todayob
+    return formatted
 
 def save(activities):
     data = {}
@@ -170,4 +176,9 @@ def export_csv(activities,filename="activity_log.csv"):
     return True
 
 if __name__ == "__main__":
-    pass
+    x = load()
+    print("before", x.get_log('test'))
+    x.activate('test')
+    time.sleep(5)
+    x.deactivate()
+    print("after", x.get_log('test'))
