@@ -114,6 +114,9 @@ def input_handler(key):
             save(activities)
             text.set_text(f"Finished: {activities.todays_log(SELECTED)}")
 
+    elif key == "r" and ON:
+        HANDLE = timer(_loop=loop,_data=None)
+
     elif key == "l" and not ON:
         text.set_text(f"{SELECTED} Log:\n\n{activities.get_log(SELECTED,recent=True)}")
 
