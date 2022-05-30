@@ -14,17 +14,17 @@ KEYS = {"1":0,"2":1,"3":2,"4":3,"5":4,"6":5,"7":6,"8":7,"9":8,"0":9,"!":10,"@":1
 def args_handler(args):
 
     match [arg.lower() for arg in args]:
-        case [arg, name] if arg in ("add", "a"):
+        case ["add" | "a" , name]:
             if activities.add(name):
                 save(activities)
                 print("Done!")
 
-        case [arg, name] if arg in ("del","d"):
+        case ["delete" | "del", name]:
             if activities.delete(name):
                 save(activities)
                 print("Done!")
 
-        case [arg, name] if arg in ("sel", "select"):
+        case ["sel" | "select", name]:
             if activities.select(name):
                 save(activities)
                 print("Done!")
