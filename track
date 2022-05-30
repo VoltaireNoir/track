@@ -13,134 +13,132 @@ KEYS = {"1":0,"2":1,"3":2,"4":3,"5":4,"6":5,"7":6,"8":7,"9":8,"0":9,"!":10,"@":1
 
 def args_handler(args):
 
-    if len(args) >= 2:
-        if args[0].lower() in ("add","a"):
-            name = args[1]
+    match [arg.lower() for arg in args]:
+        case [arg, name] if arg in ("add", "a"):
             if activities.add(name):
                 save(activities)
                 print("Done!")
 
-        elif args[0].lower() in ("del","d"):
-            name = args[1]
+        case [arg, name] if arg in ("del","d"):
             if activities.delete(name):
                 save(activities)
                 print("Done!")
 
-        elif args[0].lower() == "log":
-            name = args[1]
-            print(activities.get_log(name))
-
-        elif args[0].lower() == "today":
-            name = args[1]
-            print(activities.todays_log(name))
-
-        elif args[0].lower() in ("select","sel"):
-            name = args[1]
+        case [arg, name] if arg in ("sel", "select"):
             if activities.select(name):
                 save(activities)
                 print("Done!")
 
-        elif args[0].lower() == "map":
+        case ["log", name]:
             name = args[1]
-            if args[2] in KEYS:
-                index = KEYS[args[2]]
-                if activities.map(name,index):
-                    save(activities)
-                    print("Done!")
+            print(activities.get_log(name))
 
-        elif args[0].lower() == "clean":
-            name, date, today = args[1], None, False
-            if len(args) == 3:
-                if args[2].lower() == "today": today = True
-                else: date = args[1]
-            if name == "all": activities.clean_all_logs()
-            else: activities.clean_log(name,date,today)
+        case ["today", name]:
+            print(activities.todays_log(name))
+
+        case ["map", name, key] if key in KEYS:
+            index = KEYS[key]
+            if activities.map(name,index):
+                save(activities)
+                print("Done!")
+
+        case ["clean", *clargs]:
+            match clargs:
+                case ["all"]:
+                    activities.clean_all_logs()
+                case [name]:
+                    activities.clean_log(name)
+                case [name,"today"]:
+                    activities.clean_log(name,today=True)
+                case [name, date]:
+                    activities.clean_log(name,date)
             save(activities)
-    else:
-        if args[0].lower() == "logs":
+
+        case ["logs"]:
             print(activities.get_logs())
 
-        elif args[0].lower() == "list":
+        case ["list"]:
             if len(activities.get_all_names()) == 0:
                 print("Empty")
             else:
                 for name in activities.get_all_names():
                     print(name)
 
-        elif args[0].lower() == "start":
+        case ["start"]:
             if activities.activate():
                 save(activities)
                 print(f"{activities.ACTIVE.name} is now active!")
 
-        elif args[0].lower() == "stop":
+        case ["stop"]:
             if activities.deactivate():
                 save(activities)
                 name = activities.ACTIVE.name
                 print(f"{name} finished at {activities.todays_log(name)}")
 
-        elif args[0].lower() == "status":
+        case ["status"]:
             name = "None" if activities.ACTIVE.name == "" else activities.ACTIVE.name
             state = "Active" if activities.ACTIVE.state else "Inactive"
             clog = activities.active_log()
             print(f"Sel: {name.capitalize()}\nState: {state}\nLog: {clog}")
 
-        elif args[0].lower() == "keymap":
+        case ["keymap"]:
             k = list(KEYS.keys())
             for keymap in [f"{k[i]}: {name}" for i, name in enumerate(activities.get_all_names()) if i < 20]:
                 print(keymap)
 
-        elif args[0].lower() == "flush":
+        case ["flush"]:
             activities.flush()
             save(activities)
 
-        elif args[0].lower() == "export":
+        case ["export"]:
             if export_csv(activities):
                 print("Done!")
 
 def input_handler(key):
     global SELECTED, ON, HANDLE
 
-    if key == "q": raise u.ExitMainLoop()
+    match key:
+        case "q": raise u.ExitMainLoop()
 
-    elif key == "s":
-        if not ON:
-            ON = True
-            activities.activate(SELECTED)
-            HANDLE = timer(_loop=loop,_data=None)
-        else:
-            ON = False
+        case "s":
+            if not ON:
+                ON = True
+                activities.activate(SELECTED)
+                HANDLE = timer(_loop=loop,_data=None)
+            else:
+                ON = False
+                loop.remove_alarm(HANDLE)
+                activities.deactivate()
+                save(activities)
+                text.set_text(f"Finished: {activities.todays_log(SELECTED)}")
+
+        case "r" if ON:
             loop.remove_alarm(HANDLE)
-            activities.deactivate()
+            HANDLE = timer(_loop=loop,_data=None)
+
+        case "l" if not ON:
+            text.set_text(f"{SELECTED} Log:\n\n{activities.get_log(SELECTED,recent=True)}")
+
+        case "c" if not ON:
+            activities.clean_log(SELECTED,today=True)
             save(activities)
-            text.set_text(f"Finished: {activities.todays_log(SELECTED)}")
+            text.set_text(f"Today's {SELECTED} Log Cleared")
 
-    elif key == "r" and ON:
-        loop.remove_alarm(HANDLE)
-        HANDLE = timer(_loop=loop,_data=None)
+        case "C" if not ON:
+            activities.clean_log(SELECTED)
+            save(activities)
+            text.set_text(f"{SELECTED}'s All Logs Cleared")
 
-    elif key == "l" and not ON:
-        text.set_text(f"{SELECTED} Log:\n\n{activities.get_log(SELECTED,recent=True)}")
+        case "D" if not ON:
+            activities.delete(SELECTED)
+            save(activities)
+            text.set_text(f"{SELECTED} Deleted from Activities")
 
-    elif key == "c" and not ON:
-        activities.clean_log(SELECTED,today=True)
-        save(activities)
-        text.set_text(f"Today's {SELECTED} Log Cleared")
-
-    elif key == "C" and not ON:
-        activities.clean_log(SELECTED)
-        save(activities)
-        text.set_text(f"{SELECTED}'s All Logs Cleared")
-
-    elif key == "D" and not ON:
-        activities.delete(SELECTED)
-        save(activities)
-        text.set_text(f"{SELECTED} Deleted from Activities")
-
-    elif key in KEYS and not ON:
-        key = KEYS[key]
-        if key < len(activities):
-            SELECTED = activities[key].name
-            text.set_text(f"Selected: {SELECTED}")
+        case key if key in KEYS and not ON:
+            key = KEYS[key]
+            if key < len(activities):
+                SELECTED = activities[key].name
+                text.set_text(f"Selected: {SELECTED}")
 
 def timer(_loop,_data):
     if ON:
