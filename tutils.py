@@ -40,6 +40,12 @@ class activities(list):
 
     ACTIVE = activity("")
 
+    def __repr__(self):
+        return f"Act[{', '.join(self.get_all_names())}]"
+
+    def __str__(self):
+        return self.__repr__()
+
     def add(self, name:str, log={}):
         if not self.exists(name): self.append(activity(name,log)); return True
 
@@ -181,4 +187,4 @@ def export_csv(activities,filename="activity_log.csv"):
     return True
 
 if __name__ == "__main__":
-    pass
+    breakpoint()
